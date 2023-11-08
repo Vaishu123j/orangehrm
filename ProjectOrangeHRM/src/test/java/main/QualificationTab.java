@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -33,6 +34,12 @@ public class QualificationTab extends BaseClassTest {
 		login.clickLoginButton();
 
 	}
+	@AfterMethod
+
+	public void Teardown() {
+		driver.quit();
+
+	}
 
 	@Test(priority=1)
 	public void openAdminTab() {
@@ -52,7 +59,7 @@ public class QualificationTab extends BaseClassTest {
 	}
 @Test(priority=3)
 	public void SkillsTab() {
-		driver.findElement(By.xpath("//*[@id=\\\"app\\\"]/div[1]/div[1]/header/div[2]/nav/ul/li[4]/span")).click();
+		driver.findElement(By.xpath("//*[@id=\\\"app\\\"]/div[1]/div[1]/header/div[2]/nav/ul/li[4]/span/i")).click();
 
 		QualificationTest.ClickSkillTab();
 		
@@ -61,7 +68,7 @@ public class QualificationTab extends BaseClassTest {
 
 	@Test(dataProvider = "skillData",priority=4)
 	public void testAddSkill(String skillName) {
-		driver.findElement(By.xpath("//*[@id=\\\"app\\\"]/div[1]/div[1]/header/div[2]/nav/ul/li[4]/span")).click();
+		driver.findElement(By.xpath("//*[@id=\\\"app\\\"]/div[1]/div[1]/header/div[2]/nav/ul/li[4]/span/i")).click();
 
 		QualificationTest.clickAddSkill();
 		QualificationTest.enterSkillName(skillName);
@@ -88,12 +95,7 @@ public class QualificationTab extends BaseClassTest {
 	        };
 	 }
 
-	@AfterTest
-
-	public void Teardown() {
-		driver.quit();
-
-	}
+	
 
 
 }
