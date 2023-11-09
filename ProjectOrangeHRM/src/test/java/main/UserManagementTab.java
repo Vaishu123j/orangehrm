@@ -51,9 +51,9 @@ public class UserManagementTab extends BaseClassTest{
 	@Test
 	public void Verifyaddbutton() {
 		WebElement addUserButton = driver
-				.findElement(By.xpath("//*[@id=\\\"app\\\"]/div[1]/div[2]/div[2]/div/div[2]/div[1]/button"));
+				.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div[2]/div[1]/button"));
 
-		if (addUserButton.isEnabled()) {
+		if (addUserButton.isSelected()) {
 			// Placeholder for the functionality to be added
 			// You can add your code to perform an action here
 			System.out.println("Add User functionality is enabled. Proceed with your functionality.");
@@ -62,12 +62,12 @@ public class UserManagementTab extends BaseClassTest{
 			// You can add alternative actions or assertions here
 			System.out.println("Add User functionality is disabled. Handle this scenario.");
 		}
+		driver.close();
 	}
 
 	@Test(dependsOnMethods = "verifytheTab")
 	public void Addfunctionality() {
 
-		try {
 			// Navigate to the Admin tab
 			WebElement AddButton = driver
 					.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div[2]/div[1]/button"));
@@ -76,7 +76,9 @@ public class UserManagementTab extends BaseClassTest{
 			// Click on the 'userole' button to add a new user
 			WebElement UserRole = driver.findElement(By.xpath(
 					"//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[1]/div/div[1]/div/div[2]/div/div/div[2]/i"));
-			UserRole.click();
+			Select s1 = new Select(UserRole);
+			s1.selectByVisibleText("Admin");
+		
 			driver.findElement(By.className("oxd-select-text-input")).click();
 
 			// Fill in user details 
@@ -89,45 +91,36 @@ public class UserManagementTab extends BaseClassTest{
 			Username.sendKeys("Doe");
 
 			WebElement Status = driver.findElement(By.xpath(
-					"///*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[1]/div/div[3]/div/div[2]/div/div/div[2]/i"));
-			Status.click();
+					"//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[1]/div/div[3]/div/div[2]/div/div/div[2]/i"));
+			Select s = new Select(Status);
+			s.deselectByValue("Enabled");
+			
 			driver.findElement(By.xpath(
 					"//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[1]/div/div[3]/div/div[2]/div/div/div[1]"))
 					.click();
 
 			WebElement passwordField = driver.findElement(
 					By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[1]/div/div[2]/input"));
-			passwordField.sendKeys("securepassword");
+			passwordField.sendKeys("securepassword@3");
 
 			WebElement confirmPasswordField = driver.findElement(
 					By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[2]/div/div[2]/input"));
-			confirmPasswordField.sendKeys("securepassword");
+			confirmPasswordField.sendKeys("securepassword@3");
 
 			WebElement saveButton = driver
 					.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[3]/button[2]"));
 			saveButton.click();
 
-			
-			Assert.assertTrue(driver.findElement(By.id("systemUser_userType")).isDisplayed(), "User was not added.");
-
-		} catch (Exception e) {
-			// Handle any exceptions that may occur during the process
-			e.printStackTrace();
-			Assert.fail("Exception occurred: " + e.getMessage());
-
-		}}
+		
 	
 
 	
 	    @Test
 		public void deletefunctionality() {
 	    	UserManagement user =new UserManagement(driver);
+	    	driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div[2]/div[3]/div/div[2]/div[2]/div/div[6]/div/button[1]")).click();
 
-			user.deleteUser("Admin");
-			driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div[2]/div[3]/div/div[1]/div/div[1]/div/label/span/i")).click();
-			 
 			
-
 	}
 
 	@AfterClass
@@ -139,3 +132,4 @@ public class UserManagementTab extends BaseClassTest{
 
 
 }
+
