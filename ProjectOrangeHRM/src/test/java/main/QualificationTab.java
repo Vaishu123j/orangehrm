@@ -24,78 +24,79 @@ public class QualificationTab extends BaseClassTest {
 
 	@BeforeClass
 	public void setp() {
-		driver = intialization("Chrome");
+driver = intialization("Chrome");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		LoginTest login = new LoginTest(driver);
-		Qualification QualificationTest = new Qualification(driver);
+		Qualification qt = new Qualification(driver);
 
 		login.enterUsername("Admin");
 		login.enterPassword("admin123");
 		login.clickLoginButton();
+		login.clickAdminTab();
+		login.clickQualificationTable();
 
 	}
+
+	@Test
+	public void testQualificationList() {
+
+		List<WebElement> qualifications = qt.getQualifications();
+
+		for (WebElement qualification : qualifications) {
+			System.out.println(qualification.getText());
+
+		}
+		driver.close();
+	}
+
+	@Test
+	public void SkillsTab() {
+
+		driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/header/div[2]/nav/ul/li[4]/span")).click();
+
+		qt.ClickSkillTab();
+		driver.close();
+
+	}
+
+	@Test(dataProvider = "skillData")
+	public void testAddSkill(String skillName) {
+		qt.ClickSkillTab();
+		qt.clickAddSkill();
+		qt.enterSkillName(skillName);
+		driver.close();
+
+	}
+
+	@Test
+	public void testEditSkill() {
+
+		qt.ClickSkillTab();
+		qt.clickAddSkill();
+		qt.enterSkillName("java");
+		driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[3]/button[2]")).click();
+		driver.close();
+
+	}
+
+	@Test
+	public void testDeleteSkill() {
+		qt.ClickSkillTab();
+		qt.clickDeleteSkill();
+		driver.close();
+
+	}
+
+	@DataProvider(name = "skillData")
+	public Object[][] getSkillData() {
+		return new Object[][] { { "Java Programming" }, { "Web Development" }, { "Data Analysis" }, };
+	}
+
 	@AfterMethod
 
 	public void Teardown() {
 		driver.quit();
 
 	}
-
-	@Test(priority=1)
-	public void openAdminTab() {
-		WebElement adminTab = driver.findElement(By.className("oxd-main-menu-item"));
-		adminTab.click();
-
-	}
-
-	@Test(priority=2)
-	public void testQualificationList() {
-		List<WebElement> qualifications = QualificationTest.getQualifications();
-
-		for (WebElement qualification : qualifications) {
-			System.out.println(qualification.getText());
-
-		}
-	}
-@Test(priority=3)
-	public void SkillsTab() {
-		driver.findElement(By.xpath("//*[@id=\\\"app\\\"]/div[1]/div[1]/header/div[2]/nav/ul/li[4]/span/i")).click();
-
-		QualificationTest.ClickSkillTab();
-		
-		
-	}
-
-	@Test(dataProvider = "skillData",priority=4)
-	public void testAddSkill(String skillName) {
-		driver.findElement(By.xpath("//*[@id=\\\"app\\\"]/div[1]/div[1]/header/div[2]/nav/ul/li[4]/span/i")).click();
-
-		QualificationTest.clickAddSkill();
-		QualificationTest.enterSkillName(skillName);
-
-	}
-
-	@Test(priority=5)
-	public void testEditSkill() {
-		QualificationTest.clickEditSkill();
-
-	}
-
-	@Test(priority=6)
-	public void testDeleteSkill() {
-		QualificationTest.clickDeleteSkill();
-		
-	}
-	 @DataProvider(name = "skillData")
-	    public Object[][] getSkillData() {
-	        return new Object[][] {
-	            {"Java Programming"},
-	            {"Web Development"},
-	            {"Data Analysis"},
-	        };
-	 }
-
-	
-
-
 }
+
