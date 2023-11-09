@@ -11,6 +11,8 @@ public class LoginTest {
 			.xpath("//*[@id=\"app\"]/div[1]/div/div[1]/div/div[2]/div[2]/form/div[2]/div/div[2]/input");
 	private By loginButton = By.xpath("//*[@id=\"app\"]/div[1]/div/div[1]/div/div[2]/div[2]/form/div[3]/button");
 	private By errorMessage = By.xpath("//*[@id=\"app\"]/div[1]/div/div[1]/div/div[2]/div[2]/div/div[1]/div[1]");
+	private By adminTab = By.className("oxd-main-menu-item");
+	private By qualificationTable = By.xpath("//*[@id=\"app\"]/div[1]/div[1]/header/div[2]/nav/ul/li[4]/span");
 
 	
 	public LoginTest(WebDriver driver) {
@@ -34,6 +36,15 @@ public class LoginTest {
 
 	public String getErrorMessage() {
 		return driver.findElement(errorMessage).getText();
+	}
+
+
+	public void clickAdminTab() {
+		driver.findElement(adminTab).click();
+	}
+
+	public void clickQualificationTable() {
+		driver.findElement(qualificationTable).click();
 	}
 
 }
